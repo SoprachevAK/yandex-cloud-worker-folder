@@ -134,7 +134,7 @@ try {
     }
 
     console.log(`No worker found by key: ${key}`);
-    throw ''
+    return ''
   }
 
   function makeid(length) {
