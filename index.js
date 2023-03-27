@@ -29,11 +29,11 @@ try {
 
   function targetFolderName() {
     if (targetName) {
-      `worker-folder-${targetName}`
+      return `worker-folder-${targetName}`
     }
 
     if (github.context.payload.pull_request) {
-      `worker-folder-pr${github.context.payload.pull_request?.number}`
+      return `worker-folder-pr${github.context.payload.pull_request?.number}`
     }
 
     return null
