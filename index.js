@@ -49,7 +49,7 @@ try {
     const freeWorkers = workers.filter(folder => folder.labels[WORKER_NODE_TAG] == 'free')
     const workerIds = workers.map(folder => folder.labels[WORKER_NODE_ID_TAG])
 
-    const workName = `worker-folder-${targetName}`
+    const workName = `worker-folder-${targetName ?? github.context.payload.pull_request?.number}`
 
     if (freeWorkers.length == 0) {
       console.log(`Found ${freeWorkers.length} free workers. Total workers: ${workers.length}. Allocate new worker...`);
