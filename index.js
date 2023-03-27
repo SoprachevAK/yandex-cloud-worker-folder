@@ -32,7 +32,7 @@ try {
       `worker-folder-${targetName}`
     }
 
-    if (github.context.payload.pull_request?.number) {
+    if (github.context.payload.pull_request) {
       `worker-folder-pr${github.context.payload.pull_request?.number}`
     }
 
@@ -86,7 +86,7 @@ try {
     const worker = freeWorkers[0]
     await folderService.update(UpdateFolderRequest.fromPartial({
       folderId: worker.id,
-      name: allowNameChange && !folderNames.includes(folderName) ? folderName : worker.name,
+      name: allowNameChange && folderName && !folderNames.includes(folderName) ? folderName : worker.name,
       description: allowNameChange ? `[working] CICD worker folder ${worker.labels[WORKER_NODE_ID_TAG]}` : worker.description,
       labels: {
         [WORKER_NODE_TAG]: 'working',
