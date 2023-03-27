@@ -2,7 +2,7 @@ name: 'Worker folder'
 description: 'Allocate or free worker folder in Yandex Cloud'
 inputs:
   operation:
-    description: 'allocate or free a worker folder'
+    description: 'get | free'
     required: true
   cloudId:
     description: 'Yandex Cloud id'
@@ -16,8 +16,15 @@ inputs:
   name:
     description: 'Name of folder after allocation'
     required: false
+  key:
+    description: 'Unique key for worker, you can use it for search folder'
+    required: false
   allowChangeName:
     description: 'Allow change name of folder after operation'
+    required: false
+    default: true
+  allowAllocate:
+    description: 'Allow allocate folder when operation is get'
     required: false
     default: true
 outputs:
