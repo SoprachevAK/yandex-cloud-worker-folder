@@ -55,9 +55,10 @@ try {
       console.log(`Found ${freeWorkers.length} free workers. Total workers: ${workers.length}. Allocate new worker...`);
       const id = makeidUnique(4, workerIds)
 
+      const targetFolderName = !targetName ? `worker-folder-${id}` : workName
       const folder = await folderService.create(CreateFolderRequest.fromPartial({
         cloudId: cloudId,
-        name: !folderNames.includes(workName) ? workName : `worker-folder-${id}`,
+        name: !folderNames.includes(targetFolderName) ? targetFolderName : `worker-folder-${id}`,
         description: `[working] CICD worker folder ${id}`,
         labels: {
           [WORKER_NODE_TAG]: 'working',
@@ -73,7 +74,7 @@ try {
     const worker = freeWorkers[0]
     await folderService.update(UpdateFolderRequest.fromPartial({
       folderId: worker.id,
-      name: allowNameChange && !folderNames.includes(workName) ? workName : worker.name,
+      name: allowNameChange && targetName && !folderNames.includes(workName) ? workName : worker.name,
       description: allowNameChange ? `[working] CICD worker folder ${worker.labels[WORKER_NODE_ID_TAG]}` : worker.description,
       labels: {
         [WORKER_NODE_TAG]: 'working',
