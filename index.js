@@ -102,7 +102,7 @@ try {
     return id;
   }
 
-  if (operation != 'allocate' || operation != 'free') {
+  if (operation != 'allocate' && operation != 'free') {
     throw new Error(`Unknown operation: ${operation}. Expected 'allocate' or 'free'`);
   }
 
