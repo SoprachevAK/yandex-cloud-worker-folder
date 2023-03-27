@@ -34,7 +34,7 @@ try {
       folder.status == Folder_Status.ACTIVE)
 
     console.log(`Use key: ${key}`)
-    const hashKey = md5(tag)
+    const hashKey = md5(key)
 
     const workerByKey = workers.find(folder => folder.labels[WORKER_KEY_TAG] == hashKey)
     if (workerByKey) {
@@ -111,7 +111,7 @@ try {
       folder.status == Folder_Status.ACTIVE)
 
     console.log(`Use key: ${key}`)
-    const hashKey = md5(tag)
+    const hashKey = md5(key)
 
     const workerByKey = workers.find(folder => folder.labels[WORKER_KEY_TAG] == hashKey)
     if (workerByKey) {
