@@ -133,7 +133,8 @@ try {
       return workerByKey.id
     }
 
-    throw new Error(`No worker found by key: ${key}`)
+    console.log(`No worker found by key: ${key}`);
+    throw ''
   }
 
   function makeid(length) {
