@@ -1,14 +1,17 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Worker folder'
+description: 'Allocate or free worker folder in Yandex Cloud'
 inputs:
   operation:
     description: 'allocate or free a worker folder'
     required: true
   cloudId:
-    description: 'Yandex cloud id'
+    description: 'Yandex Cloud id'
+    required: true
+  oauthToken:
+    description: 'Yandex Cloud oauth token'
     required: true
   folderId:
-    description: 'Yandex cloud folder id for free operation'
+    description: 'Yandex Cloud folder id for free operation'
     required: false
   name:
     description: 'Name of folder after allocation'
