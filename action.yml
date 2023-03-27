@@ -1,0 +1,25 @@
+name: 'Hello World'
+description: 'Greet someone and record the time'
+inputs:
+  operation:
+    description: 'allocate or free a worker folder'
+    required: true
+  cloudId:
+    description: 'Yandex cloud id'
+    required: true
+  folderId:
+    description: 'Yandex cloud folder id for free operation'
+    required: false
+  name:
+    description: 'Name of folder after allocation'
+    required: false
+  allowChangeName:
+    description: 'Allow change name of folder after operation'
+    required: false
+    default: false
+outputs:
+  folderId:
+    description: 'id of allocated folder'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
