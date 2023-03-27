@@ -2802,7 +2802,7 @@ try {
   const operation = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('operation');
   console.log(`Operation: ${operation}`);
 
-  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("folderId", time);
+  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("folderId", '1234567890');
 } catch (error) {
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
 }

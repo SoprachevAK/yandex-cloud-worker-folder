@@ -16,7 +16,7 @@ inputs:
   allowChangeName:
     description: 'Allow change name of folder after operation'
     required: false
-    default: false
+    default: true
 outputs:
   folderId:
     description: 'id of allocated folder'
