@@ -74,7 +74,9 @@ try {
     const worker = freeWorkers[0]
     await folderService.update(UpdateFolderRequest.fromPartial({
       folderId: worker.id,
-      name: allowNameChange && targetName && !folderNames.includes(workName) ? workName : worker.name,
+      name: allowNameChange &&
+        (targetName ?? github.context.payload.pull_request?.number) &&
+        !folderNames.includes(workName) ? workName : worker.name,
       description: allowNameChange ? `[working] CICD worker folder ${worker.labels[WORKER_NODE_ID_TAG]}` : worker.description,
       labels: {
         [WORKER_NODE_TAG]: 'working',
