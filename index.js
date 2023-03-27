@@ -27,6 +27,18 @@ try {
   const folders = await folderService.list(ListFoldersRequest.fromPartial({ cloudId }))
   const folderNames = folders.folders.map(folder => folder.name)
 
+  function targetFolderName() {
+    if (targetName) {
+      `worker-folder-${targetName}`
+    }
+
+    if (github.context.payload.pull_request?.number) {
+      `worker-folder-pr${github.context.payload.pull_request?.number}`
+    }
+
+    return null
+  }
+
   async function getWorker(allowAllocate, key) {
     const workers = folders.folders.filter(folder =>
       folder.labels[WORKER_NODE_TAG] &&
@@ -49,13 +61,13 @@ try {
     const freeWorkers = workers.filter(folder => folder.labels[WORKER_NODE_TAG] == 'free')
     const workerIds = workers.map(folder => folder.labels[WORKER_NODE_ID_TAG])
 
-    const workName = `worker-folder-${targetName ?? github.context.payload.pull_request?.number}`
+    const folderName = targetFolderName()
 
     if (freeWorkers.length == 0) {
       console.log(`Found ${freeWorkers.length} free workers. Total workers: ${workers.length}. Allocate new worker...`);
       const id = makeidUnique(4, workerIds)
 
-      const targetFolderName = !targetName ? `worker-folder-${id}` : workName
+      const targetFolderName = folderName ?? `worker-folder-${id}`
       const folder = await folderService.create(CreateFolderRequest.fromPartial({
         cloudId: cloudId,
         name: !folderNames.includes(targetFolderName) ? targetFolderName : `worker-folder-${id}`,
@@ -74,9 +86,7 @@ try {
     const worker = freeWorkers[0]
     await folderService.update(UpdateFolderRequest.fromPartial({
       folderId: worker.id,
-      name: allowNameChange &&
-        (targetName ?? github.context.payload.pull_request?.number) &&
-        !folderNames.includes(workName) ? workName : worker.name,
+      name: allowNameChange && !folderNames.includes(folderName) ? folderName : worker.name,
       description: allowNameChange ? `[working] CICD worker folder ${worker.labels[WORKER_NODE_ID_TAG]}` : worker.description,
       labels: {
         [WORKER_NODE_TAG]: 'working',
