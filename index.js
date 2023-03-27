@@ -66,7 +66,7 @@ try {
   }
 
   async function freeWorker(folderId) {
-    const folderService = new Session({ oauthToken: token }).client(serviceClients.FolderServiceClient);
+    const folderService = new Session({ oauthToken }).client(serviceClients.FolderServiceClient);
     const folder = await folderService.get(GetFolderRequest.fromPartial({ folderId }));
 
     const id = folder.labels[WORKER_NODE_ID_TAG];
@@ -104,6 +104,10 @@ try {
 
   if (operation != 'allocate' && operation != 'free') {
     throw new Error(`Unknown operation: ${operation}. Expected 'allocate' or 'free'`);
+  }
+
+  if (operation == 'free' && freeFolderId == '') {
+    throw new Error(`Folder id is required for operation 'free'`);
   }
 
   if (operation == 'allocate') {
