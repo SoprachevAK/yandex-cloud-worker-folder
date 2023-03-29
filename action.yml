@@ -1,4 +1,4 @@
-name: 'Worker folder'
+name: 'Yandex Cloud worker folder manager'
 description: 'Allocate or free worker folder in Yandex Cloud'
 inputs:
   operation:
