@@ -9,7 +9,10 @@ inputs:
     required: true
   oauthToken:
     description: 'Yandex Cloud oauth token'
-    required: true
+    required: false
+  serviceAccountKeyJson:
+    description: 'Yandex Cloud service account key json'
+    required: false
   folderId:
     description: 'Yandex Cloud folder id for free operation'
     required: false
@@ -34,5 +37,5 @@ runs:
   using: 'node16'
   main: 'dist/index.js'
 branding:
-  icon: "folder"
-  color: "blue"
+  icon: 'folder'
+  color: 'blue'

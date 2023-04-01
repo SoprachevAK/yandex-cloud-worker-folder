@@ -18,14 +18,20 @@ const {
 try {
   const operation = core.getInput('operation', { required: true })
   const cloudId = core.getInput('cloudId', { required: true })
-  const oauthToken = core.getInput('oauthToken', { required: true })
+  const oauthToken = core.getInput('oauthToken')
+  const jsonkey = core.getInput('serviceAccountKeyJson')
   const allowNameChange = core.getInput('allowChangeName') ?? true
   const freeFolderId = core.getInput('folderId') ?? ''
   const targetName = core.getInput('name') ?? ''
 
-  const folderService = new Session({ oauthToken }).client(serviceClients.FolderServiceClient)
+  if (!oauthToken && !jsonkey) throw new Error('OauthToken or ServiceAccountKeyJson must be provided')
+
+  const folderService = new Session(jsonkey ? { serviceAccountJson: JSON.parse(jsonkey) } : { oauthToken })
+    .client(serviceClients.FolderServiceClient)
   const folders = await folderService.list(ListFoldersRequest.fromPartial({ cloudId }))
   const folderNames = folders.folders.map(folder => folder.name)
+
+
 
   function targetFolderName() {
     if (targetName) {
