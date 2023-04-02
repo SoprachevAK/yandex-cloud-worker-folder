@@ -26,7 +26,16 @@ try {
 
   if (!oauthToken && !jsonkey) throw new Error('OauthToken or ServiceAccountKeyJson must be provided')
 
-  const folderService = new Session(jsonkey ? { serviceAccountJson: JSON.parse(jsonkey) } : { oauthToken })
+  const convert = (json) => {
+    const key = JSON.parse(json);
+    return {
+      accessKeyId: key.id,
+      serviceAccountId: key.service_account_id,
+      privateKey: key.private_key
+    }
+  }
+
+  const folderService = new Session(jsonkey ? { serviceAccountJson: convert(jsonkey) } : { oauthToken })
     .client(serviceClients.FolderServiceClient)
   const folders = await folderService.list(ListFoldersRequest.fromPartial({ cloudId }))
   const folderNames = folders.folders.map(folder => folder.name)
