@@ -114,7 +114,6 @@ try {
   }
 
   async function freeWorker(folderId) {
-    const folderService = new Session({ oauthToken }).client(serviceClients.FolderServiceClient)
     const folder = await folderService.get(GetFolderRequest.fromPartial({ folderId }))
 
     const id = folder.labels[WORKER_NODE_ID_TAG]
